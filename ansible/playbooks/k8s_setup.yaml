@@ -33,6 +33,11 @@
       - curl
       - ca-certificates
 
+  - name: Remove old Kubernetes sources list if it exists
+    ansible.builtin.file:
+      path: /etc/apt/sources.list.d/kubernetes.list
+      state: absent
+
   - name: update apt-get and install kube packages
     shell: |
       curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
