@@ -2,20 +2,6 @@
   become: true
   tasks:
 
-  - name: Remove old Kubernetes repository
-  apt_repository:
-    repo: 'deb https://apt.kubernetes.io/ kubernetes-jammy main'
-    state: absent
-
-- name: Add Kubernetes repository for Jammy
-  apt_repository:
-    repo: 'deb https://apt.kubernetes.io/ kubernetes-jammy main'
-    state: present
-
-- name: Update apt-get
-  apt:
-    update_cache: yes
-
 
   - name: change hostnames
     shell: "hostnamectl set-hostname {{ hostvars[inventory_hostname]['private_dns_name'] }}"
