@@ -33,11 +33,6 @@
         - curl
         - ca-certificates
 
-  - name: Remove old Kubernetes sources list if it exists
-    ansible.builtin.file:
-      path: /etc/apt/sources.list.d/kubernetes.list
-      state: absent
-
   - name: Update apt-get and install Kubernetes packages
     shell: |
       sudo mkdir -p /usr/share/keyrings
