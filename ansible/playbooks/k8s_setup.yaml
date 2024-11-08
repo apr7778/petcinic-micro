@@ -40,21 +40,16 @@
 
 - name: Update apt-get and install Kubernetes packages
   shell: |
-    # Ensure the /etc/apt/keyrings directory exists
+   
     sudo mkdir -p /usr/share/keyrings
 
     # Download the public signing key for the Kubernetes package repositories
-    curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
     # Add the new Kubernetes repository
     echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-jammy main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
     # Update the apt package index
-    sudo apt-get update 
-
-    # Install specific versions of Kubernetes packages
-    apt-get update -q && sudo apt-get install -qy kubelet=1.26.3-00 kubectl=1.26.3-00 kubeadm=1.26.3-00 kubernetes-cni docker.io
-    sudo apt-mark hold kubelet kubeadm kubectl
-
+    apt-get install -y kubelet=1.28.2-1.1 kubeadm=1.28.2-1.1 kubectl=1.28.2-1.1 kubernetes-cni docker.io
+    apt-mark hold kubelet kubeadm kubectl
 
 
 
