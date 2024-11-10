@@ -35,7 +35,7 @@
 
   - name: Update apt-get and install Kubernetes packages
     shell: |
-      sudo mkdir -p /usr/share/keyrings
+      sudo mkdir -p -m 755 /etc/apt/keyrings
 
       # Download the public signing key for the Kubernetes package repositories
       curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
@@ -44,9 +44,8 @@
       echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
       sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list   # helps tools such as command-not-found to work correctly      # Update the apt package index
       sudo apt-get update
-      sudo apt-get install -y kubectl
-      apt-get install -y kubelet=1.28.2-1.1 kubeadm=1.28.2-1.1 kubectl=1.28.2-1.1 kubernetes-cni docker.io
-      apt-mark hold kubelet kubeadm kubectl
+      sudo apt-get install -y kubelet=1.31.0-1.1 kubeadm=1.31.0-1.1 kubectl=1.31.0-1.1 kubernetes-cni docker.io
+      sudo apt-mark hold kubelet kubeadm kubectl
 
   - name: Add ubuntu to docker group
     user:
