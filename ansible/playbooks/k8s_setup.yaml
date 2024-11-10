@@ -35,6 +35,9 @@
 
   - name: Update apt-get and install Kubernetes packages
     shell: |
+      sudo apt-get update
+# apt-transport-https may be a dummy package; if so, you can skip that package
+      sudo apt-get install -y apt-transport-https ca-certificates curl gnup
       sudo mkdir -p -m 755 /etc/apt/keyrings
 
       # Download the public signing key for the Kubernetes package repositories
